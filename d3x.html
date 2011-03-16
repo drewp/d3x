@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <title>D3 eXplorer</title>
     <script src="js/jquery-1.5.1.min.js"></script>
+    <script src="js/jquery-ui-1.8.10.custom.min.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/ace/src/ace.js"></script>
     <script src="js/ace/src/theme-twilight.js"></script>
     <script src="js/ace/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/ace/src/mode-css.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/ui-darkness/jquery-ui-1.8.10.custom.css">
     <script>
       function setStyle(style) {
         var s = document.createElement('style');
@@ -46,30 +48,27 @@
           setStyle(style);
         });
 
+        $("#tabs").tabs({
+          select: function(e, ui) {
+            style.getSession();
+            code.getSession();
+        }});
+
         setStyle(style);
         evalCode(code);
+
       });
     </script>
     <style>
       svg {
+        float: right;
         margin: 10px;
       }
     
-      section {
-        margin: 10px;
-        width: 47%;
-      }
-
-      section#left {
+      div.tab {
         float: left;
-      }
-
-      section#right {
-        float: right;
-      }
-
-      hr {
-        clear: both;
+        margin: 10px;
+        width: 550px;
       }
 
       .editor {
@@ -83,9 +82,13 @@
     </style>
   </head>
   <body>
-    <section id="left">
-      <h1>Code</h1>
-      <div id="code" class="editor">var data = d3.range(20).map(function(i) {
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-code" title="Code">Code</a></li>
+        <li><a href="#tabs-style" title="Style">Style</a></li>
+      </ul>
+      <div id="tabs-code" class="tab">
+        <div id="code" class="editor">var data = d3.range(20).map(function(i) {
   return {x: i / 19, y: (Math.sin(i / 3) + 1) / 2};
 });
 
@@ -155,11 +158,10 @@ vis.selectAll("circle.area")
     .attr("cx", function(d) { return x(d.x); })
     .attr("cy", function(d) { return y(d.y); })
     .attr("r", 3.5);
+        </div>
       </div>
-    </section>
-    <section id="right">
-      <h1>Style</h1>
-      <div id="style" class="editor">.rule line {
+      <div id="tabs-style" class="tab">
+        <div id="style" class="editor">.rule line {
   stroke: #eee;
   shape-rendering: crispEdges;
 }
@@ -181,8 +183,8 @@ vis.selectAll("circle.area")
 circle.area {
   fill: #fff;
 }
+        </div>
       </div>
-    </section>
-    <hr>
+    </div>
   </body>
 </html>
