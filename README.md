@@ -10,4 +10,4 @@
 
 # Screenshot
 
-![Basic UI](../../../raw/master/screenshot.png)
+![Basic UI](raw/master/screenshot.png)
