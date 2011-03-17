@@ -12,16 +12,10 @@
     <script src="js/ace/src/mode-css.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="css/ui-darkness/jquery-ui-1.8.10.custom.css">
     <script>
-      function setStyle(style) {
-        var s = document.createElement('style');
-        s.id = 'rendered';
-        s.innerHTML = style.getSession().getValue();
-        $("head style#rendered").replaceWith(s);
-      }
-
-      function evalCode(code) {
-          $("svg").remove();
-          window.eval(code.getSession().getValue());
+      function render(code, style) {
+        $("iframe").contents()[0].defaultView.d3x_render(
+          code.getSession().getValue(),
+          style.getSession().getValue());
       }
 
       $(document).ready(function() {
@@ -33,10 +27,10 @@
         code.getSession().setMode(new JavascriptMode);
 
         code.getSession().on('change', function() {
-          if(timeout !== undefined) {
+          if(timeout) {
             window.clearTimeout(timeout);
           }
-          timeout = window.setTimeout(function() { evalCode(code); }, 500);
+          timeout = window.setTimeout(function() { render(code, style); }, 500);
         });
 
         var style = ace.edit('style');
@@ -45,7 +39,7 @@
         style.getSession().setMode(new CSSMode);
 
         style.getSession().on('change', function() {
-          setStyle(style);
+          render(code, style)
         });
 
         $("#tabs").tabs({
@@ -53,10 +47,9 @@
             style.getSession();
             code.getSession();
         }});
-
-        setStyle(style);
-        evalCode(code);
-
+        window.iframe_onready = function() {
+          render(code, style);
+        };
       });
     </script>
     <style>
@@ -64,7 +57,7 @@
         float: right;
         margin: 10px;
       }
-    
+
       div.tab {
         float: left;
         margin: 10px;
@@ -76,9 +69,15 @@
         width: 100%;
         height: 500px;
       }
+
+      iframe[name="sandbox"] {
+        margin: 10px;
+        width: 500px;
+        height: 500px;
+      }
     </style>
     <style id="rendered">
-      
+
     </style>
   </head>
   <body>
@@ -186,5 +185,6 @@ circle.area {
         </div>
       </div>
     </div>
+    <iframe name="sandbox" src="sandbox.html"></iframe>
   </body>
 </html>
