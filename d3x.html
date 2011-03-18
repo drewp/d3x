@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>D3 eXplorer</title>
-    <script src="js/jquery-1.5.1.min.js"></script>
-    <script src="js/jquery-ui-1.8.10.custom.min.js"></script>
-    <script src="js/ace/src/ace.js"></script>
-    <script src="js/ace/src/theme-twilight.js"></script>
-    <script src="js/ace/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/ace/src/mode-css.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="css/ui-darkness/jquery-ui-1.8.10.custom.css">
+    <script src="deps/jquery/jquery-1.5.1.min.js"></script>
+    <script src="deps/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="deps/ace/build/src/ace.js"></script>
+    <script src="deps/ace/build/src/theme-twilight.js"></script>
+    <script src="deps/ace/build/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+    <script src="deps/ace/build/src/mode-css.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="deps/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">
     <script>
       function render(code, style) {
         $("iframe").contents()[0].defaultView.d3x_render(
@@ -156,7 +156,11 @@ vis.selectAll("circle.area")
         </div>
       </div>
       <div id="tabs-style" class="tab">
-        <div id="style" class="editor">.rule line {
+        <div id="style" class="editor">body {
+  font: 10px sans-serif;
+}
+
+.rule line {
   stroke: #eee;
   shape-rendering: crispEdges;
 }
