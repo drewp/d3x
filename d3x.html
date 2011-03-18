@@ -52,11 +52,16 @@
       });
     </script>
     <style>
-      div.tab {
+      #tabs {
         float: left;
-        margin: 5px;
+        padding: 2px;
+      }
+
+      #tabs > div {
+        margin: 0px;
+        padding: 2px;
         width: 550px;
-        height: 600px;
+        height: 650px;
       }
 
       .editor {
@@ -66,14 +71,14 @@
       }
 
       iframe[name="sandbox"] {
-        border: 1px solid;
-        margin: 5px;
-        height: 90%;
+        margin-left: 5px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        border: 1px solid #aaa;
+        height: 705px;
         width: 55%;
       }
-    </style>
-    <style id="rendered">
-
     </style>
   </head>
   <body>
