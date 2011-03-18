@@ -3,92 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>D3 eXplorer</title>
+    <!-- <script src="deps/jquery/jquery-1.5.1.js"></script> -->
+    <!-- <script src="deps/ace/build/src/ace-uncompressed.js"></script> -->
+
     <script src="deps/jquery/jquery-1.5.1.min.js"></script>
-    <script src="deps/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
     <script src="deps/ace/build/src/ace.js"></script>
+    <script src="deps/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
     <script src="deps/ace/build/src/theme-twilight.js"></script>
-    <script src="deps/ace/build/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
-    <script src="deps/ace/build/src/mode-css.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="deps/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">
+    <script src="deps/ace/build/src/mode-javascript.js"></script>
+    <script src="deps/ace/build/src/mode-html.js"></script>
+    <script src="deps/ace/build/src/mode-css.js"></script>
+    <script src="js/d3x.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="deps/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">
+    <link rel="stylesheet" type="text/css" href="css/d3x.css">
+
     <script>
-      function render(code, style) {
-        $("iframe").contents()[0].defaultView.d3x_render(
-          code.getSession().getValue(),
-          style.getSession().getValue());
-      }
-
-      $(document).ready(function() {
-        var timeout;
-        var JavascriptMode = require("ace/mode/javascript").Mode;
-        var code = ace.edit('code');
-        code.setTheme("ace/theme/twilight");
-
-        code.getSession().setMode(new JavascriptMode);
-
-        code.getSession().on('change', function() {
-          if(timeout) {
-            window.clearTimeout(timeout);
-          }
-          timeout = window.setTimeout(function() { render(code, style); }, 500);
-        });
-
-        var style = ace.edit('style');
-        var CSSMode = require("ace/mode/css").Mode;
-        style.setTheme("ace/theme/twilight");
-        style.getSession().setMode(new CSSMode);
-
-        style.getSession().on('change', function() {
-          render(code, style)
-        });
-
-        $("#tabs").tabs({
-          select: function(e, ui) {
-            style.getSession();
-            code.getSession();
-        }});
-        window.iframe_onready = function() {
-          render(code, style);
-        };
-      });
     </script>
-    <style>
-      #tabs {
-        float: left;
-        padding: 2px;
-      }
-
-      #tabs > div {
-        margin: 0px;
-        padding: 2px;
-        width: 550px;
-        height: 650px;
-      }
-
-      .editor {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-
-      iframe[name="sandbox"] {
-        margin-left: 5px;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-        border: 1px solid #aaa;
-        height: 705px;
-        width: 55%;
-      }
-    </style>
   </head>
   <body>
     <div id="tabs">
       <ul>
-        <li><a href="#tabs-code" title="Code">Code</a></li>
-        <li><a href="#tabs-style" title="Style">Style</a></li>
+        <li><a href="#tabs-js" title="JS">JS</a></li>
+        <li><a href="#tabs-css" title="CSS">CSS</a></li>
       </ul>
-      <div id="tabs-code" class="tab">
-        <div id="code" class="editor">var data = d3.range(20).map(function(i) {
+      <div id="tabs-js" class="tab">
+        <div id="js" class="editor">var data = d3.range(20).map(function(i) {
   return {x: i / 19, y: (Math.sin(i / 3) + 1) / 2};
 });
 
@@ -153,15 +94,14 @@ vis.append("svg:path")
 
 vis.selectAll("circle.area")
     .data(data)
-    .enter().append("svg:circle")
-  .attr("class", "area")
+  .enter().append("svg:circle")
+    .attr("class", "area")
     .attr("cx", function(d) { return x(d.x); })
     .attr("cy", function(d) { return y(d.y); })
-    .attr("r", 3.5);
-        </div>
+    .attr("r", 3.5);</div>
       </div>
-      <div id="tabs-style" class="tab">
-        <div id="style" class="editor">body {
+      <div id="tabs-css" class="tab">
+        <div id="css" class="editor">body {
   font: 10px sans-serif;
 }
 
@@ -186,10 +126,9 @@ vis.selectAll("circle.area")
 
 circle.area {
   fill: #fff;
-}
-        </div>
+}</div>
       </div>
     </div>
-    <iframe name="sandbox" src="sandbox.html"></iframe>
+    <iframe src="sandbox.html"></iframe>
   </body>
 </html>
