@@ -16,7 +16,7 @@
 
     git clone git://github.com/dreid/d3x.git
     cd d3x
-    git submodules update --init
+    git submodule update --init
     ./dev
 
 Visit [http://localhost:8080/d3x.html](http://localhost:8080/d3x.html) in your
